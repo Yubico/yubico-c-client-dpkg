@@ -1,3 +1,39 @@
+2012-08-07  Klas Lindfors <klas@yubico.com>
+
+	* simple.mk: add curl with LDLIBS instead of LDFLAGS
+
+2012-08-07  Klas Lindfors <klas@yubico.com>
+
+	* NEWS: NEWS for 2.9
+
+2012-08-07  Klas Lindfors <klas@yubico.com>
+
+	* tests/Makefile.am, tests/selftest.c: add test for
+	encoding/decoding strings to base64
+
+2012-08-06  Klas Lindfors <klas@yubico.com>
+
+	* b64/cdecode.c, b64/cencode.c: make the base64 implementation work
+	on ARM char is unsigned by default on ARM, leading to problems, see:
+
+	http://sourceforge.net/tracker/?func=detail&aid=3313901&group_id=152942&atid=785907Thanks to user "yann" on Yubico forums for noticing this bug.
+
+2012-06-21  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: fix bugs with curl 7.16 (at least) with older curl curl_multi can sometimes return information from old
+	discarded curl_easy handles. avoid this by moving init/cleanup of
+	curl_multi to the request function and get a new one for each
+	request.
+
+2012-06-21  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: compability with curl before 7.20.0 curl before 7.20.0 can return CURLM_CALL_MULTI_PERFORM, when that
+	happens continue so we call it immeadiately again.
+
+2012-06-15  Klas Lindfors <klas@yubico.com>
+
+	* NEWS, configure.ac: bump versions post-release
+
 2012-06-15  Fredrik Thulin <fredrik@yubico.com>
 
 	* tests/Makefile.am: Test cases need cURL now.
@@ -19,17 +55,15 @@
 
 	* m4/.placeholder: placeholder file so the m4 directory exists
 
-2012-06-05  Clemens Lang <neverpanic@gmail.com>
+2012-06-05  Klas Lindfors <klas@yubico.com>
 
-	* configure.ac: Silence warning: missing AM_PROG_AR on non-POSIX Automake 1.12 complains: "linking libraries using a non-POSIX
-	archiver requires 'AM_PROG_AR' in 'configure.ac'". This patch
-	silences this warning, allowing automake 1.12 to process
-	configure.ac with -Werror
+	* : commit 1179d1b2b014d39ce6834e4d68686f80bd514d3d Author: Clemens
+	Lang <neverpanic@gmail.com> Date:   Tue Jun 5 02:50:23 2012 +0200
 
 2012-05-30  Klas Lindfors <klas@yubico.com>
 
-	* m4/libcurl.m4: remove libcurl.m4, should be present in the system
-	instead
+	* : commit e8da9e552d58317d2e4fd5ea1e82cfcceaad6415 Author: Klas
+	Lindfors <klas@yubico.com> Date:   Wed May 30 10:13:36 2012 +0200
 
 2012-05-30  Klas Lindfors <klas@yubico.com>
 
@@ -43,7 +77,8 @@
 
 2012-05-29  Klas Lindfors <klas@yubico.com>
 
-	* configure.ac: library code modified and interfaces added
+	* : commit b0e1a5472546d20d96f675c32f0f4f0d9f31ae2a Author: Klas
+	Lindfors <klas@yubico.com> Date:   Tue May 29 09:52:22 2012 +0200
 
 2012-05-28  Klas Lindfors <klas@yubico.com>
 
@@ -67,13 +102,16 @@
 
 	* ykclient.c: move up variable declarations to scope start
 
-2012-05-15  Simon Josefsson <simon@josefsson.org>
+2012-05-15  Klas Lindfors <klas@yubico.com>
 
-	* ykclient.c: Silence valgrind.
+	* : commit 12b24e66417d719e61a3ef001a27de4e912fc45b Author: Simon
+	Josefsson <simon@josefsson.org> Date:   Tue May 15 10:49:52 2012
+	+0200
 
-2012-05-14  Klas Lindfors <klas@yubico.com>
+2012-05-15  Klas Lindfors <klas@yubico.com>
 
-	* ykclient.c: use curl_easy_escape() to do url escaping of signature
+	* : commit 48f78fcc56ba5ad6c27ddc625c65bba1c1fe8ecc Author: Klas
+	Lindfors <klas@yubico.com> Date:   Mon May 14 14:22:57 2012 +0200
 
 2012-05-14  Klas Lindfors <klas@yubico.com>
 
@@ -223,11 +261,10 @@
 
 	* configure.ac: Prepare for release 2.5.  Library code modified and interfaces added.
 
-2011-03-11  Tollef Fog Heen <tfheen@err.no>
+2011-05-30  Fredrik Thulin <fredrik@yubico.com>
 
-	* tests/Makefile.am, tests/selftest.c: Make test build without
-	ykclient being installed first Add missing -I flag to ensure we get the right ykclient.h when
-	building the self test
+	* : commit 5ef5b810b1be12a7883612d65a361d0d3be01324 Author: Tollef
+	Fog Heen <tfheen@err.no> Date:   Fri Mar 11 14:02:55 2011 +0100
 
 2011-03-08  Fredrik Thulin <fredrik@yubico.com>
 
@@ -262,10 +299,8 @@
 
 2011-03-04  Fredrik Thulin <fredrik@yubico.com>
 
-	* ykclient.c: Only verify our nonce/OTP is in status=OK responses.  A MITM will always be able to get the server to send signed
-	responses about invalid HMAC in request for example, so there is no
-	need to have nonce/OTP in those responses (and at least one
-	validation server implementation does not include it in those).
+	* : commit c40063ae88a96a1dad9640e803823b8115ce32c2 Author: Fredrik
+	Thulin <fredrik@yubico.com> Date:   Fri Mar 4 10:24:31 2011 +0100
 
 2011-03-03  Fredrik Thulin <fredrik@yubico.com>
 
@@ -316,8 +351,8 @@
 
 2011-02-23  Fredrik Thulin <fredrik@yubico.com>
 
-	* configure.ac, ykclient.h: Minor changes after pre-release review
-	by Simon.
+	* : commit 4c4c7cc53ec411df7d35a5399df397ad7c526075 Author: Fredrik
+	Thulin <fredrik@yubico.com> Date:   Wed Feb 23 10:34:39 2011 +0100
 
 2011-02-23  Fredrik Thulin <fredrik@yubico.com>
 
