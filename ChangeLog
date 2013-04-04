@@ -1,0 +1,640 @@
+2012-06-15  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/Makefile.am: Test cases need cURL now.
+
+2012-06-15  Klas Lindfors <klas@yubico.com>
+
+	* NEWS: NEWS for version 2.8
+
+2012-06-15  Klas Lindfors <klas@yubico.com>
+
+	* README, configure.ac: remove -Wno-extra-portability, it breaks on
+	automake before 1.11.2
+
+2012-06-15  Fredrik Thulin <fredrik@yubico.com>
+
+	* tool.c: Remove extra %'s in usage output.
+
+2012-06-07  Klas Lindfors <klas@yubico.com>
+
+	* m4/.placeholder: placeholder file so the m4 directory exists
+
+2012-06-05  Clemens Lang <neverpanic@gmail.com>
+
+	* configure.ac: Silence warning: missing AM_PROG_AR on non-POSIX Automake 1.12 complains: "linking libraries using a non-POSIX
+	archiver requires 'AM_PROG_AR' in 'configure.ac'". This patch
+	silences this warning, allowing automake 1.12 to process
+	configure.ac with -Werror
+
+2012-05-30  Klas Lindfors <klas@yubico.com>
+
+	* m4/libcurl.m4: remove libcurl.m4, should be present in the system
+	instead
+
+2012-05-30  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: move around nonce allocation allocate space for the nonce in ykclient_request(), only using
+	ykc->nonce for user supplied nonce.
+
+2012-05-30  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: remove old comment about only one url, no longer
+	accurate
+
+2012-05-29  Klas Lindfors <klas@yubico.com>
+
+	* configure.ac: library code modified and interfaces added
+
+2012-05-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: do url-encoding of the passed in OTP.
+
+2012-05-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: generate a new nonce for each request unless the nonce
+	is set by the user
+
+2012-05-23  Jay Kline <jay.kline.ctr@hpcmo.hpc.mil>
+
+	* tool.c: Add copyright notice
+
+2012-05-16  Klas Lindfors <klas@yubico.com>
+
+	* tests/selftest.c: do curl_clobal_init() and curl_global_cleanup()
+	so valgrind is quiter
+
+2012-05-15  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: move up variable declarations to scope start
+
+2012-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* ykclient.c: Silence valgrind.
+
+2012-05-14  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: use curl_easy_escape() to do url escaping of signature
+
+2012-05-14  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c, ykclient.h: check malloc and num_templates in
+	set_url_templates() let it return int
+
+2012-05-14  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: forgotten free, leaked on every call.
+
+2012-05-14  Klas Lindfors <klas@yubico.com>
+
+	* tests/selftest.c: run the main bulk of the tests with default url add test for setting several urls and doing request
+
+2012-05-14  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c, ykclient.h: add features to use curl_multi to speak
+	with several validation servers add ykc_set_url_templates(), all other work only internal,
+	interfaces kept.
+
+2012-05-04  Jay Kline <jay.kline.ctr@hpcmo.hpc.mil>
+
+	* tool.c: Add option to specify CA path Add the --ca option to the utility to allow users to specify a
+	separate CA path
+
+2012-05-04  Jay Kline <jay.kline.ctr@hpcmo.hpc.mil>
+
+	* ykclient_server_response.c: Perform memset after checking malloc
+	not after
+
+2012-04-27  Lee Hinman <lee.hinman.ctr@hpc.mil>
+
+	* ykclient.c: Fixed segfault caused by curl error - libcurl error were causing ykclient_request to free resources
+	  before they had been allocated - also added a fprintf to stderr to print out the curl error, the   generic one did not provide enough info for someone to debug
+
+2012-03-21  Jay Kline <jay.kline.ctr@hpcmo.hpc.mil>
+
+	* ykclient.c, ykclient_server_response.c: Fix segfaults  * Added memset after malloc of structs
+
+2012-01-23  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Use silent rules.
+
+2012-01-23  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, ykclient.h: Add C++ protection.
+
+2012-01-23  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING, Makefile.am, README, configure.ac, simple.mk,
+	tests/Makefile.am, tests/selftest.c, tool.c, ykclient.c,
+	ykclient.h, ykclient_server_response.c, ykclient_server_response.h: 
+	Bump copyright years.
+
+2011-11-23  Simon Josefsson <simon@josefsson.org>
+
+	* README, configure.ac: Shift blame.
+
+2011-11-23  Fredrik Thulin <fredrik@yubico.com>
+
+	* NEWS: Release date for v2.7.
+
+2011-11-23  Fredrik Thulin <fredrik@yubico.com>
+
+	* Makefile.am: distcheck: fix test of simple.mk
+
+2011-11-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* NEWS, configure.ac: Prepare version 2.7.
+
+2011-11-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* Makefile.am: Two srcdir fixes in release target.
+
+2011-11-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient_server_response.c: Return YKCLIENT_BAD_SERVER_SIGNATURE
+	on missing signature.  This differentiates missing signature from no (other) parameters
+	returned or general parse failures.
+
+2011-11-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c, ykclient.c: Verify signatures by default when we
+	can.  Problem reported by Dominic Rutherford
+	<dominic@rutherfordfamily.co.uk>.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* NEWS, configure.ac: Bump versions.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* .gitignore: Update.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* tool.c: Remove unused parameter.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* ykclient_server_response.c: Silence compiler warnings.  Reported by Jussi Sallinen <jussi@jus.si>.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* NEWS: Version 2.6.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* NEWS: Update.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* Makefile.am, simple.mk: Fix release target.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* configure.ac: Bump versions.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* Makefile.am: Fix release.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* NEWS: Add.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* ykclient.c, ykclient.h, ykclient_server_response.c,
+	ykclient_server_response.h: Replace // with /*, the former is not
+	C89.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* tool.c, ykclient.c, ykclient.h, ykclient_server_response.c,
+	ykclient_server_response.h: Indent.
+
+2011-06-06  Simon Josefsson <--all>
+
+	* tool.c: Use fprintf+exit instead of errx.  Reported by Jussi Sallinen <jussi@jus.si>.
+
+2011-05-31  Fredrik Thulin <fredrik@yubico.com>
+
+	* NEWS: Document changes between 2.4 and 2.5.
+
+2011-05-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* configure.ac: Prepare for release 2.5.  Library code modified and interfaces added.
+
+2011-03-11  Tollef Fog Heen <tfheen@err.no>
+
+	* tests/Makefile.am, tests/selftest.c: Make test build without
+	ykclient being installed first Add missing -I flag to ensure we get the right ykclient.h when
+	building the self test
+
+2011-03-08  Fredrik Thulin <fredrik@yubico.com>
+
+	* Makefile.am: Fix 'make check' before 'make'.
+
+2011-03-07  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c: Disable tests using Internet connectivity using
+	define.  Launchpad PPA build system does not allow outgoing connections.
+
+2011-03-04  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c, ykclient.c, ykclient.h: Restore ability to send
+	signed requests to v1 validation servers.  To do that, we need to be able to remove the nonce, since the v1
+	server won't include the nonce in the HMAC input.
+
+2011-03-04  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c: URL tinkering
+
+2011-03-04  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c: Add v1.0 test case.
+
+2011-03-04  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c: Update default wsapi URL.
+
+2011-03-04  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/Makefile.am: Include path to ykclient.h.
+
+2011-03-04  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: Only verify our nonce/OTP is in status=OK responses.  A MITM will always be able to get the server to send signed
+	responses about invalid HMAC in request for example, so there is no
+	need to have nonce/OTP in those responses (and at least one
+	validation server implementation does not include it in those).
+
+2011-03-03  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: Change default URL to version 2.0 web service.
+
+2011-03-03  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: Don't crash on absence of otp/nonce in server
+	response.
+
+2011-03-02  Fredrik Thulin <fredrik@yubico.com>
+
+	* Makefile.am: release: restore tag naming.
+
+2011-03-02  Fredrik Thulin <fredrik@yubico.com>
+
+	* NEWS: Document changes between 2.3 and 2.4.
+
+2011-03-01  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c: Use assert().
+
+2011-03-01  Fredrik Thulin <fredrik@yubico.com>
+
+	* tests/selftest.c: Add test info printouts.
+
+2011-02-28  Fredrik Thulin <fredrik@yubico.com>
+
+	* Makefile.am, configure.ac, selftest.c, tests/Makefile.am,
+	tests/selftest.c: Fix insecure rpath issue.  http://code.google.com/p/yubico-c-client/issues/detail?id=6
+
+2011-02-24  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: Verify OTP in response received matches the one we
+	sent.  This is to protect us from a man in the middle sending us a
+	previously seen genuine response again (such as an status=OK
+	response even though the real server will respond
+	status=REPLAYED_OTP in a few milliseconds.
+
+2011-02-24  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: Fix signing of request.  HMAC signatures were broken since the nonce was appended after the
+	signature had been calculated.
+
+2011-02-23  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: whitespace
+
+2011-02-23  Fredrik Thulin <fredrik@yubico.com>
+
+	* configure.ac, ykclient.h: Minor changes after pre-release review
+	by Simon.
+
+2011-02-23  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: Avoid duplicate nonces.  The seed to srandom () must change with every request, otherwise we
+	will get the same nonce and the validation server will reject the
+	request.  At the moment we don't consider it necessary to have a
+	cryptographically secure nonce generation but rather favour
+	portability and simplicity.
+
+2011-02-18  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c, ykclient.h: Handle server response NOT_ENOUGH_ANSWERS.
+
+2011-02-18  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: Verify nonce in server response matches ours.  Part of ykclient-2.3-nonce.patch by qistoph@gmail.com.
+
+2011-02-18  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c, ykclient.h: Check result of CURL operation, and avoid
+	segfault on error.  Patch from qistoph@gmail.com in http://code.google.com/p/yubico-c-client/issues/detail?id=8
+
+2011-02-18  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient_server_response.c: Fix memory leaks.
+
+2011-02-17  Sebastien Martini <seb@dbzteam.org>
+
+	* Makefile.am, selftest.c, simple.mk, tool.c, ykclient.c,
+	ykclient.h, ykclient_server_response.c, ykclient_server_response.h: 
+	Check server response HMAC signature.  Some changes to original patch by Fredrik Thulin
+	<fredrik@yubico.com>.  Original patch submitted in
+	http://code.google.com/p/yubico-c-client/issues/detail?id=1
+
+2011-02-18  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c, ykclient.h: Handle server response
+	status=REPLAYED_REQUEST.  Part of ykclient-2.3-nonce.patch by qistoph@gmail.com.
+
+2011-02-18  Fredrik Thulin <fredrik@yubico.com>
+
+	* tool.c: Implement option parsing with getopt_long.  Done in anticipation of the various options that might be
+	interesting to set with Validation protocol 2.0.
+
+2011-02-18  Fredrik Thulin <fredrik@yubico.com>
+
+	* tool.c, ykclient.c, ykclient.h: Prepare ykclient_verify_otp_v2()
+	to accept more than one URL.  Validation protocol 2.0 includes support for muliple validation
+	servers to be contacted simultaneously, make the arguments for this
+	function handle that even though we don't currently support more
+	than one URL (will result in YKCLIENT_NOT_IMPLEMENTED).  Also make it possible for caller to pass a ykclient_t for special
+	CURL settings etc.
+
+2011-02-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.c: ykclient_verify_otp: explicit return.
+
+2011-02-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* configure.ac: Prepare for version 2.4.
+
+2011-02-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* ykclient.h: Add YKCLIENT_NOT_IMPLEMENTED, missing from last
+	commit.
+
+2011-02-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* tool.c, ykclient.c, ykclient.h: Restore library call
+	ykclient_verify_otp.  Instead of breaking backwards compatibility by adding URL parameter
+	to ykclient_verify_otp(), we add another ykclient_verify_otp_v2()
+	with more parameters.  That function also gets a currently unused argument api_key, to not
+	have to add another function when I merge another patch soon.
+
+2011-02-17  Fredrik Thulin <fredrik@yubico.com>
+
+	* tool.c: Make argument parsing easier to extend.
+
+2011-02-16  Fredrik Thulin <fredrik@yubico.com>
+
+	* doc: sync
+
+2011-02-16  Fredrik Thulin <fredrik@yubico.com>
+
+	* .gitignore: ignore more autoconf files
+
+2011-02-16  Fredrik Thulin <fredrik@yubico.com>
+
+	* .gitignore: init
+
+2011-02-16  Fredrik Thulin <fredrik@yubico.com>
+
+	* .gitmodules, Makefile.am, doc: Git(hub) adaptions.
+
+2011-02-16  Fredrik Thulin <fredrik@yubico.com>
+
+	* README: New asciidoc syntax for Github wiki.
+
+2011-02-11  Remi Mollon <remi.mollon@cern.ch>
+
+	* tool.c, ykclient.c, ykclient.h: * Generate randomly a NONCE value to be compliant with Validation
+	protocol v2   => will this break protocol v1 compatibility of this extra
+	  parameter will just be ignored? * Add possibility to specify validation server URL
+
+2009-06-22  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
+2009-05-11  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.3.
+
+2009-05-11  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump libtool library version.
+
+2009-05-11  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, b64/cdecode.c, b64/cdecode.h, selftest.c,
+	simple.mk, ykclient.c, ykclient.h: Add ykclient_set_client_b64.  Fix
+	mem leaks.  Fix multiple request response problem.
+
+2009-05-05  Simon Josefsson <simon@josefsson.org>
+
+	* simple.mk: Clean more.  Add MORE_CFLAGS.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.2.
+
+2009-03-31  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix release target.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* README: Improve build instructions.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* README: Don't always run autoreconf.
+
+2009-03-30  Simon Josefsson <simon@josefsson.org>
+
+	* README: Do 'make install' too.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, tool.c, ykclient.c, ykclient.h: Change API
+	ykclient_verify_otp to take a hex key.  Accept NULL hex keys.
+
+2009-03-27  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, selftest.c, ykclient.c, ykclient.h: Add new API
+	ykclient_set_client_hex.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Dist more.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.1.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, b64/cencode.c, b64/cencode.h, rfc4634/hmac.c,
+	rfc4634/sha-private.h, rfc4634/sha.h, rfc4634/sha1.c,
+	rfc4634/sha224-256.c, rfc4634/sha384-512.c, rfc4634/usha.c,
+	selftest.c, simple.mk, ykclient.c, ykclient.h: Create signatures on
+	requests.  Add new API ykclient_get_last_url.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING: Fix copyright year.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.0.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* simple.mk: Update.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* README: Update documentation.
+
+2009-03-25  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, configure.ac, libykclient.c, libykclient.h,
+	selftest.c, tool.c, ykclient.c, ykclient.h: Cleanup library
+	interface.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.5.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* libykclient.c: Fix mem release of url.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* libykclient.c: Describe new error code.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* libykclient.h: Add new error code for printf errors.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* libykclient.c: Don't use asprintf, for Solaris.  Fix memory leaks.
+
+2009-01-13  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, configure.ac, libcurl.m4, m4/libcurl.m4: Put m4
+	macros in m4/.
+
+2008-09-17  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, configure.ac: Use libtool
+	-export-symbols-regex.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.4.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump versions.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Add aclocal -I for libcurl.m4.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.3.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* selftest.c: Test new APIs.
+
+2008-09-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac, libykclient.c, libykclient.h: ykclient: Add
+	new API yubikey_client_set_url_template.
+
+2008-07-24  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.2.
+
+2008-07-24  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, configure.ac, ykclient.c: Install ykclient.h.
+	Set exit code in ykclient.  Bump versions.
+
+2008-06-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.1.
+
+2008-06-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Fix.
+
+2008-06-25  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2008-06-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2008-06-16  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 1.0.
+
+2008-06-16  Simon Josefsson <simon@josefsson.org>
+
+	* AUTHORS, COPYING, Makefile.am, NEWS, README, configure.ac,
+	libcurl.m4, libykclient.c, libykclient.h, selftest.c, simple.mk,
+	ykclient.c: Initial import.
+
+2008-06-16  no author <no.author@unknown.example.org>
+
+	* Initial directory structure.
+
