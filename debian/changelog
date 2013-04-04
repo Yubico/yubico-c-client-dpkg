@@ -1,3 +1,19 @@
+ykclient (2.9-1) unstable; urgency=low
+
+  * New upstream release.
+  * Use 3.0 quilt source format.
+  * Update standards version to 3.9.4.
+  * Remove obsolete 'DM-Upload-Allowed'.
+  * Drop Fredrik as uploader, add Klas and Dain.
+  * Use compat level 9.
+  * Add symbols file.
+  * Add watch file.
+  * Fix lintian warnings: binary-control-field-duplicates-source,
+    ancient-standards-version, debian-watch-file-is-missing,
+    no-symbols-control-file
+
+ -- Simon Josefsson <simon@yubico.com>  Thu, 04 Apr 2013 22:38:57 +0200
+
 ykclient (2.8-2) unstable; urgency=low
 
   * Fix FTBFS on signed-char architectures.  Thanks to Jakub Wilk for the
