@@ -1,0 +1,35 @@
+Source: ykclient
+Priority: optional
+Maintainer: Tollef Fog Heen <tfheen@debian.org>
+Uploaders: Fredrik Thulin <fredrik@yubico.com>, Simon Josefsson <simon@yubico.com>
+DM-Upload-Allowed: yes
+Build-Depends: debhelper (>= 7.0.50), autotools-dev, libcurl4-gnutls-dev | libcurl4-openssl-dev, chrpath
+Standards-Version: 3.8.3
+Section: libs
+Homepage: http://code.google.com/p/yubico-c-client/
+
+Package: libykclient3
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Yubikey client library runtime
+ Yubikeys are USB tokens that act like keyboards and generate one-time
+ passwords.  The tokens are produced and sold by Yubico
+ .
+ This library is used for talking to an online validation server such
+ as yubikey-server-c, yubikey-server-php or yubikey-server-j.
+ .
+ This package contains the runtime library.
+
+Package: libykclient-dev
+Section: libdevel
+Architecture: any
+Depends: libykclient3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Yubikey client library development files
+ Yubikeys are USB tokens that act like keyboards and generate one-time
+ passwords.  The tokens are produced and sold by Yubico
+ .
+ This library is used for talking to an online validation server such
+ as yubikey-server-c, yubikey-server-php or yubikey-server-j.
+ .
+ This package contains the necessary files for developing using libyubikey.

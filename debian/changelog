@@ -1,0 +1,51 @@
+ykclient (2.8-2) unstable; urgency=low
+
+  * Fix FTBFS on signed-char architectures.  Thanks to Jakub Wilk for the
+    patch.  Closes: #694804.
+  * Apply patch from Ubuntu to disable network for tests.  Thanks to
+    Michael Terry for the patch.  Closes: #682873
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 21 Dec 2012 19:48:28 +0100
+
+ykclient (2.8-1) unstable; urgency=low
+
+  * New upstream release
+  * Enable tests again
+  * Add Fredrik and Simon to uploaders as well as DM-Upload-Allowed: yes
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 29 Jun 2012 07:56:18 +0200
+
+ykclient (2.6-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 23 Jun 2011 22:40:08 +0200
+
+ykclient (2.4-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Fri, 11 Mar 2011 13:54:07 +0100
+
+ykclient (2.3-3) unstable; urgency=high
+
+  * Remove debugging code that syslogged the OTP.  High urgency since
+    people might consider them sensitive.
+  * Add chrpath to build-depends and make sure to strip the rpath from the
+    command line client.
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Tue, 19 Jan 2010 10:24:06 +0100
+
+ykclient (2.3-2) unstable; urgency=low
+
+  * Add misc:Depends and shlib:Depends to libyubikey-dev's dependencies,
+    as it ships the /usr/bin/ykclient tool.
+  * Disable all tests that uses the network.  Closes: #551240
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Thu, 29 Oct 2009 08:23:49 +0100
+
+ykclient (2.3-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Tollef Fog Heen <tfheen@debian.org>  Mon, 12 Oct 2009 13:56:35 +0200
