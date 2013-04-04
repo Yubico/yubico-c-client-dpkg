@@ -11,6 +11,7 @@ Package: libykclient3
 Architecture: any
 Multi-Arch: same
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
 Description: Yubikey client library runtime
  Yubikeys are USB tokens that act like keyboards and generate one-time
  passwords.  The tokens are produced and sold by Yubico
