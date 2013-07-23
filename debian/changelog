@@ -1,3 +1,10 @@
+ykclient (2.9-2) unstable; urgency=low
+
+  * Fix Homepage URL.
+  * Add Vcs-* headers.
+
+ -- Simon Josefsson <simon@yubico.com>  Wed, 24 Jul 2013 01:46:22 +0200
+
 ykclient (2.9-1) unstable; urgency=low
 
   * New upstream release.
