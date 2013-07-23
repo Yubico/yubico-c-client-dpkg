@@ -43,11 +43,9 @@ libykclient_la_SOURCES = ykclient_server_response.h \
 libykclient_la_SOURCES += ykclient.h ykclient_errors.h	\
 			  ykclient_version.h
 libykclient_la_SOURCES += ykclient.c ykclient_version.c
-libykclient_la_SOURCES += rfc4634/sha.h rfc4634/sha-private.h		\
-			rfc4634/hmac.c rfc4634/sha1.c rfc4634/usha.c	\
-			rfc4634/sha224-256.c rfc4634/sha384-512.c
-libykclient_la_SOURCES += b64/cencode.h b64/cencode.c b64/cdecode.h	\
-			b64/cdecode.c
+libykclient_la_SOURCES += sha.h sha-private.h hmac.c sha1.c usha.c	\
+			sha224-256.c sha384-512.c
+libykclient_la_SOURCES += cencode.h cencode.c cdecode.h cdecode.c
 libykclient_la_LIBADD = @LIBCURL@
 libykclient_la_LDFLAGS = -no-undefined \
 	-export-symbols-regex '^ykclient_.*' \
@@ -102,12 +100,12 @@ release:
 	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tar.gz
 	gpg --verify $(PACKAGE)-$(VERSION).tar.gz.sig
 	cd $(srcdir) && git push
-	cd $(srcdir) && git tag -u $(KEYID)! -m $(VERSION) $(PACKAGE)-$(VERSION)
+	cd $(srcdir) && git tag -u $(KEYID) -m $(VERSION) $(PACKAGE)-$(VERSION)
 	cd $(srcdir) && git push --tags
 	$(YUBICO_GITHUB_REPO)/publish $(PROJECT) $(VERSION) $(PACKAGE)-$(VERSION).tar.gz*
 	@if test -d $(srcdir)/../wiki-$(PROJECT); then \
 		cd $(srcdir) && \
-		cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
+		cp README ../wiki-$(PROJECT)/ReadMe.asciidoc && \
 		cd ../wiki-$(PROJECT) && \
-		git commit -m Sync. ReadMe.wiki; \
+		git commit -m Sync. ReadMe.asciidoc; \
 	fi

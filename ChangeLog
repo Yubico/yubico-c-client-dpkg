@@ -1,3 +1,31 @@
+2013-07-24  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.11.
+
+2013-07-05  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, Makefile.am, NEWS, b64/cdecode.c, b64/cdecode.h,
+	b64/cencode.c, b64/cencode.h, cdecode.c, cdecode.h, cencode.c,
+	cencode.h, configure.ac, hmac.c, rfc4634/hmac.c,
+	rfc4634/sha-private.h, rfc4634/sha.h, rfc4634/sha1.c,
+	rfc4634/sha224-256.c, rfc4634/sha384-512.c, rfc4634/usha.c,
+	sha-private.h, sha.h, sha1.c, sha224-256.c, sha384-512.c,
+	tests/Makefile.am, tests/selftest.c, usha.c, ykclient.c,
+	ykclient_server_response.c: Fix subdir-objects breakage with latest
+	automake.
+
+2013-07-04  Klas Lindfors <klas@yubico.com>
+
+	* README, tests/selftest.c: switch the tests to a full-length OTP
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix wiki checkin.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix KEYID usage.
+
 2013-05-15  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 2.10.
