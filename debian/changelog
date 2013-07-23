@@ -3,6 +3,7 @@ ykclient (2.9-2) unstable; urgency=low
   * Fix Homepage URL.
   * Update watch file.
   * Add Vcs-* headers.
+  * Add README.source.
 
  -- Simon Josefsson <simon@yubico.com>  Wed, 24 Jul 2013 01:46:22 +0200
 
