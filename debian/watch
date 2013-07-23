@@ -1,2 +1,2 @@
 version=3
-http://code.google.com/p/yubico-c-client/list?can=1 .*/ykclient-(\d[\d.]*)\.tar\.gz
+http://yubico.github.io/yubico-c-client/releases.html .*/ykclient-(\d[\d.]*)\.tar\.gz
