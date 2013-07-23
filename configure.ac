@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2008-2012 Yubico AB
+# Copyright (c) 2008-2013 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,28 +26,79 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-AC_INIT([ykclient], [2.9], [yubico-devel@googlegroups.com])
+AC_INIT([ykclient], [2.10], [yubico-devel@googlegroups.com])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Library code modified:                              REVISION++
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 7)
-AC_SUBST(LT_REVISION, 1)
-AC_SUBST(LT_AGE, 4)
+AC_SUBST(LT_CURRENT, 8)
+AC_SUBST(LT_REVISION, 0)
+AC_SUBST(LT_AGE, 5)
 
-AM_INIT_AUTOMAKE([1.10 -Wall -Werror])
+AM_INIT_AUTOMAKE([1.11 -Wall -Werror])
 AM_SILENT_RULES([yes])
 AC_PROG_CC
+
+m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
+
+AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 
 LIBCURL_CHECK_CONFIG([yes], [], [], [
   AC_MSG_ERROR([[Libcurl header files not found, install libcurl-dev.]])])
 
+AC_ARG_ENABLE([gcc-warnings],
+  [AS_HELP_STRING([--enable-gcc-warnings],
+		  [turn on lots of GCC warnings (for developers)])],
+  [case $enableval in
+     yes|no) ;;
+     *)      AC_MSG_ERROR([bad value $enableval for gcc-warnings option]) ;;
+   esac
+   gl_gcc_warnings=$enableval],
+  [gl_gcc_warnings=no]
+)
+
+if test "$gl_gcc_warnings" = yes; then
+  nw="$nw -Wsystem-headers"         # Don't let system headers trigger warnings
+  nw="$nw -Wpadded"                 # Struct's arenot padded
+  nw="$nw -Wc++-compat"             # We don't care strongly about C++ compilers
+  nw="$nw -Wtraditional"            # Warns on #elif which we use often
+  nw="$nw -Wtraditional-conversion" # Too many warnings for now
+  nw="$nw -Wconversion"             # Too many warnings for now
+  nw="$nw -Wsuggest-attribute=pure" # Is it worth using attributes?
+
+  gl_MANYWARN_ALL_GCC([ws])
+  gl_MANYWARN_COMPLEMENT(ws, [$ws], [$nw])
+  for w in $ws; do
+    gl_WARN_ADD([$w])
+  done
+
+  gl_WARN_ADD([-fdiagnostics-show-option])
+fi
+
+AC_SUBST(YKCLIENT_VERSION_MAJOR, `echo $PACKAGE_VERSION | sed 's/\(.*\)\..*/\1/g'`)
+AC_SUBST(YKCLIENT_VERSION_MINOR, `echo $PACKAGE_VERSION | sed 's/.*\.\(.*\)/\1/g'`)
+AC_SUBST(YKCLIENT_VERSION_PATCH, 0)
+AC_SUBST(YKCLIENT_VERSION_NUMBER, `printf "0x%02x%02x%02x" $YKCLIENT_VERSION_MAJOR $YKCLIENT_VERSION_MINOR $YKCLIENT_VERSION_PATCH`)
+
 AC_CONFIG_FILES([
-	Makefile
-	tests/Makefile
+  Makefile
+  ykclient_version.h
+  tests/Makefile
 ])
 AC_OUTPUT
+
+AC_MSG_NOTICE([summary of build options:
+
+  version:          ${VERSION} shared $LT_CURRENT:$LT_REVISION:$LT_AGE major $YKCLIENT_VERSION_MAJOR minor $YKCLIENT_VERSION_MINOR patch $YKCLIENT_VERSION_PATCH number $YKCLIENT_VERSION_NUMBER
+  Host type:        ${host}
+  Install prefix:   ${prefix}
+  Compiler:         ${CC}
+  Shared library:   ${enable_shared}
+  Static library:   ${enable_static}
+  Curl CPPFLAGS:    ${LIBCURL_CPPFLAGS}
+        LDFLAGS:    ${LIBCURL}
+])

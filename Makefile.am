@@ -1,5 +1,5 @@
 # Written by Simon Josefsson <simon@josefsson.org>.
-# Copyright (c) 2008-2012 Yubico AB
+# Copyright (c) 2008-2013 Yubico AB
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -30,14 +30,19 @@ SUBDIRS = . tests
 
 AM_CPPFLAGS = @LIBCURL_CPPFLAGS@
 ACLOCAL_AMFLAGS = -I m4
+AM_CFLAGS = $(WARN_CFLAGS)
 
 # The library.
 
 lib_LTLIBRARIES = libykclient.la
-include_HEADERS = ykclient_server_response.h ykclient.h
+include_HEADERS = ykclient_server_response.h ykclient.h \
+	ykclient_errors.h ykclient_version.h
 
-libykclient_la_SOURCES = ykclient_server_response.h ykclient_server_response.c	\
-			ykclient.h ykclient.c
+libykclient_la_SOURCES = ykclient_server_response.h \
+			 ykclient_server_response.c
+libykclient_la_SOURCES += ykclient.h ykclient_errors.h	\
+			  ykclient_version.h
+libykclient_la_SOURCES += ykclient.c ykclient_version.c
 libykclient_la_SOURCES += rfc4634/sha.h rfc4634/sha-private.h		\
 			rfc4634/hmac.c rfc4634/sha1.c rfc4634/usha.c	\
 			rfc4634/sha224-256.c rfc4634/sha384-512.c
@@ -55,9 +60,22 @@ bin_PROGRAMS = ykclient
 ykclient_SOURCES = tool.c
 ykclient_LDADD = ./libykclient.la
 
+# Man page
+
+dist_man_MANS = ykclient.1
+DISTCLEANFILES = $(dist_man_MANS)
+
+ykclient.1: $(builddir)/ykclient $(srcdir)/tool.c $(srcdir)/configure.ac
+	$(HELP2MAN) \
+		--output=$@ $(builddir)/ykclient$(EXEEXT) \
+		--name="YubiCloud One-Time-Password Validation Client" \
+		--no-info
+
 # Release
 
-EXTRA_DIST = simple.mk
+indent:
+	indent *.c *.h *.h.in
+	indent *.c *.h *.h.in
 
 ChangeLog:
 	cd $(srcdir) && git2cl > ChangeLog
@@ -65,18 +83,20 @@ ChangeLog:
 PROJECT = yubico-c-client
 
 release:
-	@if test -z "$(USER)" || test -z "$(KEYID)"; then \
+	@if test -z "$(KEYID)"; then \
 		echo "Try this instead:"; \
-		echo "  make release USER=[GOOGLEUSERNAME] KEYID=[PGPKEYID]"; \
+		echo "  make release KEYID=[PGPKEYID]"; \
 		echo "For example:"; \
-		echo "  make release USER=simon@yubico.com KEYID=2117364A"; \
-		echo "  make release USER=fredrikyubico@gmail.com KEYID=4EAA4232"; \
+		echo "  make release KEYID=2117364A"; \
+		exit 1; \
+	fi
+	@if test ! -d "$(YUBICO_GITHUB_REPO)"; then \
+		echo "yubico.github.com repo not found!"; \
+		echo "Make sure that YUBICO_GITHUB_REPO is set"; \
 		exit 1; \
 	fi
 	@head -3 $(srcdir)/NEWS | grep -q "Version $(VERSION) .released `date -I`" || \
-		(echo 'error: Update date/version in $(srcdir)/NEWS.'; exit 1)
-# check that non-autoconf build system works
-	cd $(srcdir) &&	make -f simple.mk check clean
+		(echo 'error: You need to update date/version in $(srcdir)/NEWS'; exit 1)
 	rm -f $(srcdir)/ChangeLog
 	make ChangeLog distcheck
 	gpg --detach-sign --default-key $(KEYID) $(PACKAGE)-$(VERSION).tar.gz
@@ -84,9 +104,10 @@ release:
 	cd $(srcdir) && git push
 	cd $(srcdir) && git tag -u $(KEYID)! -m $(VERSION) $(PACKAGE)-$(VERSION)
 	cd $(srcdir) && git push --tags
-	mkdir -p ../releases/$(PACKAGE)/ && \
-		cp -v $(PACKAGE)-$(VERSION).tar.gz* ../releases/$(PACKAGE)/
-	googlecode_upload.py -s "OpenPGP signature for $(PACKAGE) $(VERSION)." \
-	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tar.gz.sig
-	googlecode_upload.py -s "$(PACKAGE) $(VERSION)" \
-	 -p $(PROJECT) -u $(USER) $(PACKAGE)-$(VERSION).tar.gz
+	$(YUBICO_GITHUB_REPO)/publish $(PROJECT) $(VERSION) $(PACKAGE)-$(VERSION).tar.gz*
+	@if test -d $(srcdir)/../wiki-$(PROJECT); then \
+		cd $(srcdir) && \
+		cp README ../wiki-$(PROJECT)/ReadMe.wiki && \
+		cd ../wiki-$(PROJECT) && \
+		git commit -m Sync. ReadMe.wiki; \
+	fi
