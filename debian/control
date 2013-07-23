@@ -2,7 +2,7 @@ Source: ykclient
 Priority: optional
 Maintainer: Tollef Fog Heen <tfheen@debian.org>
 Uploaders: Simon Josefsson <simon@yubico.com>, Klas Lindfors <klas@yubico.com>, Dain Nilsson <dain@yubico.com>
-Build-Depends: debhelper (>= 9), autotools-dev, libcurl4-gnutls-dev | libcurl4-openssl-dev, chrpath, dh-autoreconf
+Build-Depends: debhelper (>= 9), autotools-dev, libcurl4-gnutls-dev | libcurl4-openssl-dev, chrpath, help2man, dh-autoreconf
 Standards-Version: 3.9.4
 Section: libs
 Homepage: http://yubico.github.io/yubico-c-client/
