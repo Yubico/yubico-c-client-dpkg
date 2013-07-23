@@ -69,7 +69,7 @@ list_parameter_insert_front (ykclient_parameters_t ** params,
   ykclient_parameters_t *new_node = malloc (sizeof (ykclient_parameters_t));
   if (new_node == NULL)
     return;
-  memset(new_node, 0, (sizeof (ykclient_parameters_t)));
+  memset (new_node, 0, (sizeof (ykclient_parameters_t)));
 
   new_node->parameter = elem;
   new_node->next = NULL;
@@ -147,13 +147,13 @@ list_parameter_free (ykclient_parameters_t * params)
 /* Server's response functions */
 
 ykclient_server_response_t *
-ykclient_server_response_init ()
+ykclient_server_response_init (void)
 {
   ykclient_server_response_t *serv_response =
     malloc (sizeof (ykclient_server_response_t));
   if (serv_response == NULL)
     return NULL;
-  memset(serv_response, 0, (sizeof (ykclient_server_response_t)));
+  memset (serv_response, 0, (sizeof (ykclient_server_response_t)));
   serv_response->signature = NULL;
   serv_response->parameters = NULL;
   return serv_response;
@@ -206,7 +206,7 @@ trim_ws_and_lb (char **s)
 
 /* Parses and builds the next parameter param from s, moves response's pointer
    to the immediate right character. Returns 0 if it succeeds. */
-static int
+static ykclient_rc
 parse_next_parameter (char **s, ykclient_parameter_t * param)
 {
   if (s == NULL || *s == NULL || param == NULL)
@@ -253,7 +253,7 @@ parse_next_parameter (char **s, ykclient_parameter_t * param)
   return 0;
 }
 
-int
+ykclient_rc
 ykclient_server_response_parse (char *response,
 				ykclient_server_response_t * serv_response)
 {
@@ -266,7 +266,7 @@ ykclient_server_response_parse (char *response,
       ykclient_parameter_t *param = malloc (sizeof (ykclient_parameter_t));
       if (param == NULL)
 	return YKCLIENT_OUT_OF_MEMORY;
-      memset(param,0, (sizeof(ykclient_parameter_t)));
+      memset (param, 0, (sizeof (ykclient_parameter_t)));
       int ret = parse_next_parameter (&response, param);
       if (ret)
 	return ret;

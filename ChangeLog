@@ -1,3 +1,264 @@
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.10.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Fix dist.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, README, simple.mk: Drop simple.mk build style.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Update release target.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, tool.c, ykclient.c, ykclient.h,
+	ykclient_server_response.c, ykclient_server_response.h,
+	ykclient_version.c, ykclient_version.h.in: Indent code.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Bump libtool version since we added APIs.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* README: Clarify help2man requirement.
+
+2013-05-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: ykclient.1: Don't build before binary is built.
+	Reported by eworm-de.
+
+2013-05-13  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, Makefile.am, NEWS, configure.ac, tool.c: ykclient:
+	Cleanup command line tool a bit to make it more useful.
+
+2013-04-11  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Reduce indentation in parts of ykclient_request_send
+	to make it easier to understand.  Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2013-04-11  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Call curl_multi_perform once more on cleanup Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2013-04-11  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Leave it to the caller to cleanup the connection The behaviour of the libcurl multi interface is not well documented.  One apparent issue is if you do not wait for all easy handle
+	requests to complete and remove them from the multi handle, libcurl
+	will immediately tear down the connection, sending a TCP RST to the
+	server.  Assuming the calling application implements its own connection pool
+	logic (as FreeRADIUS does), it can create multiple handles, and only
+	cleanup when the handle is next used, by which time the transfer
+	will of hopefully completed.  Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2013-04-15  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, ykclient_version.c: Add implementation of versioning
+	interface.
+
+2013-04-15  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, configure.ac, tests/selftest.c, ykclient.h,
+	ykclient_version.h.in: Add versioning information to library.
+
+2013-04-15  Simon Josefsson <simon@josefsson.org>
+
+	* ykclient.h, ykclient_errors.h, ykclient_server_response.h: Cleanup
+	ykclient_errors.h split.
+
+2013-04-11  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* .gitignore: Ignore .swp files Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2013-04-11  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Quit early on OK. Continue processing after
+	YKCLIENT_PARSE_ERROR and YKCLIENT_REPLAYED_REQUEST Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2013-04-11  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: We should check the state of the nonce we were passed,
+	not the one in ykc
+
+2013-04-11  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Remove and re-add easy handles to the multihandle on
+	cleanup (this is confusingly documented requirement of libcurl) Signed-off-by: Simon Josefsson <simon@josefsson.org>
+
+2013-04-15  Simon Josefsson <simon@josefsson.org>
+
+	* ykclient.c: Check for out of memory in ykclient_generate_nonce().
+
+2013-04-15  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, tests/selftest.c, ykclient.c, ykclient.h: Add
+	ykclient_global_init and ykclient_global_done.
+
+2013-04-10  Klas Lindfors <klas@yubico.com>
+
+	* ykclient_server_response.c: add void to function arguments
+
+2013-04-10  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: remove extra ;
+
+2013-04-10  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: add switch default case (shouldn't be needed but will
+	silence warnings).
+
+2013-04-10  Klas Lindfors <klas@yubico.com>
+
+	* ykclient_server_response.h: silence warning, function prototype
+	should specify void argument.
+
+2013-04-10  Klas Lindfors <klas@yubico.com>
+
+	* AUTHORS: expand the AUTHORS file
+
+2013-04-10  Klas Lindfors <klas@yubico.com>
+
+	* tool.c: fix warnings in the ykclient tool
+
+2013-04-09  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* Makefile.am, ykclient.c, ykclient.h, ykclient_errors.h,
+	ykclient_server_response.c, ykclient_server_response.h: Fix warnings
+	from GCC and clang
+
+2013-04-09  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* .gitignore: Don't ignore changes to manywarnings.m4 and
+	warnings.m4
+
+2013-04-04  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* .gitignore: Ignore products of make check
+
+2013-04-04  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c, ykclient.h: Use new handles and add separate function
+	for processing requests without allocating new handles Breakout URL expansion into a new function Use handles for storing expanded URLs Breakout nonce generation into its own function Only build user_agent string once on initialise
+
+2013-04-04  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Move curl callback
+
+2013-04-04  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c, ykclient.h: Use proper typedef instead of int in
+	function return types (this allows the compiler to detect return
+	values outside of the enum)
+
+2013-04-04  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Move example functions to bottom of file
+
+2013-04-04  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c, ykclient.h: Add new functions for creating, cleaning
+	and destroying handles
+
+2013-03-29  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* .gitignore: Simplify and fix .gitignore
+
+2013-03-29  Arran Cudbard-Bell <a.cudbardb@freeradius.org>
+
+	* ykclient.c: Make formatting consistent
+
+2013-01-18  Klas Lindfors <klas@yubico.com>
+
+	* configure.ac: we need automake 1.11 nowadays
+
+2012-08-24  Clemens Lang <neverpanic@gmail.com>
+
+	* configure.ac: Silence warning in automake >= 1.12
+
+2012-11-07  Klas Lindfors <klas@yubico.com>
+
+	* tests/Makefile.am, tests/selftest.c: add test cases for hmac-sha1
+	from rfc 2202
+
+2012-11-06  Klas Lindfors <klas@yubico.com>
+
+	* README, configure.ac: add whitelisting of AM_PROG_AR to work with
+	automake 1.12
+
+2012-09-13  Klas Lindfors <klas@yubico.com>
+
+	* .travis.yml: add travis continuous-integration configuration
+
+2012-08-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: assign out so we can be sure it's assigned before
+	return
+
+2012-08-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: code is never used, remove it and move other
+	declaration up
+
+2012-08-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: cast ykc->key to const unsigned char to keep constness
+
+2012-08-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: snprintf returns an int, check if it's negative
+
+2012-08-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: move up declarations and convert loop variable to
+	size_t to avoid warnings
+
+2012-08-28  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: use size_t for looping to avoid warnings
+
+2012-08-27  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: as curl_ret is a CURLMCode, use CURLM_OK instead
+
+2012-08-27  Klas Lindfors <klas@yubico.com>
+
+	* Makefile.am, configure.ac, m4/manywarnings.m4, m4/warnings.m4: add
+	the same warnings package used in yubico-c
+
+2012-08-24  Clemens Lang <neverpanic@gmail.com>
+
+	* ykclient.c: Fix clang -Wconversion warning curl_multi_strerror expects a CURLMcode, but is given a CURLcode in
+	line 673, causing: ykclient.c:673:63: warning: implicit conversion from enumeration
+	        type 'CURLcode' to different enumeration type 'CURLMcode'
+	        [-Wconversion] fprintf(stderr, "Error with curl: %s\n",
+	                                                 curl_multi_strerror(curl_ret)); ~~~~~~~~~~~~~~~~~~~ ^~~~~~~~ This can be fixed by changing the type of the variable holding the
+	return value of curl_multi_perform to CURLMcode (as its declaration
+	says it is).
+
+2012-08-24  Clemens Lang <neverpanic@gmail.com>
+
+	* ykclient.c: Fix clang warning for tautologic compare size_t is defined to be unsigned, thus size_t < 0 is a tautologic
+	compare.
+
+2012-08-13  Rony Shapiro <ronys@users.sourceforge.net>
+
+	* README: Tweak README: State libcurl-dev dependency explicitly,
+	correct make invokation.
+
+2012-08-07  Klas Lindfors <klas@yubico.com>
+
+	* NEWS, configure.ac: bump versions after version 2.9
+
 2012-08-07  Klas Lindfors <klas@yubico.com>
 
 	* simple.mk: add curl with LDLIBS instead of LDFLAGS
