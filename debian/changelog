@@ -7,6 +7,8 @@ ykclient (2.11-1) unstable; urgency=low
   * Add Vcs-* headers.
   * Add README.source.
   * Build-depend on help2man to re-generate man page.
+  * Install man page for ykclient.
+  * Improve package descriptions somewhat.
 
  -- Simon Josefsson <simon@yubico.com>  Wed, 24 Jul 2013 01:46:22 +0200
 

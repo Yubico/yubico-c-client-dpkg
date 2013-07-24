@@ -16,7 +16,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
 Description: Yubikey client library runtime
  Yubikeys are USB tokens that act like keyboards and generate one-time
- passwords.  The tokens are produced and sold by Yubico
+ passwords (OTPs).  The tokens are produced and sold by Yubico.
  .
  This library is used for talking to an online validation server such
  as yubikey-server-c, yubikey-server-php or yubikey-server-j.
@@ -28,10 +28,11 @@ Section: libdevel
 Architecture: any
 Depends: libykclient3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: Yubikey client library development files
- Yubikeys are USB tokens that act like keyboards and generate one-time
- passwords.  The tokens are produced and sold by Yubico
+ YubiKeys are USB tokens that act like keyboards and generate one-time
+ passwords (OTPs).  The tokens are produced and sold by Yubico.
  .
  This library is used for talking to an online validation server such
  as yubikey-server-c, yubikey-server-php or yubikey-server-j.
  .
- This package contains the necessary files for developing using libyubikey.
+ This package contains the necessary files for developers, and a
+ command line tool "ykclient" to perform OTP queries from the shell.

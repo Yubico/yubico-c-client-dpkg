@@ -2,3 +2,4 @@ usr/include/*
 usr/lib/*/libykclient.so
 usr/lib/*/libykclient.a
 usr/bin/ykclient
+usr/share/man/man1/ykclient.1
