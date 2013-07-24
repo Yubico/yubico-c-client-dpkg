@@ -19,3 +19,10 @@ libykclient.so.3 libykclient3 #MINVER#
  ykclient_strerror@Base 2.9
  ykclient_verify_otp@Base 2.9
  ykclient_verify_otp_v2@Base 2.9
+ ykclient_check_version@Base 2.11
+ ykclient_global_done@Base 2.11
+ ykclient_global_init@Base 2.11
+ ykclient_handle_cleanup@Base 2.11
+ ykclient_handle_done@Base 2.11
+ ykclient_handle_init@Base 2.11
+ ykclient_request_process@Base 2.11

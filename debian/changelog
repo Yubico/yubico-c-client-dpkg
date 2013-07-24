@@ -2,6 +2,7 @@ ykclient (2.11-1) unstable; urgency=low
 
   * New upstream version.
     - Fixes automake issue.  Closes: #713334.
+    - Updated symbols file.
   * Fix Homepage URL.
   * Update watch file.
   * Add Vcs-* headers.
