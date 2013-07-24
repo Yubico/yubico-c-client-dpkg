@@ -11,7 +11,7 @@ override_dh_install:
 	dh_install --fail-missing
 
 override_dh_auto_test:
-	dh_auto_test -- CFLAGS="-DTEST_WITHOUT_INTERNET"
+	dh_auto_test -- CPPFLAGS="-DTEST_WITHOUT_INTERNET"
 
 override_dh_auto_configure:
 	dh_auto_configure -- --disable-silent-rules
