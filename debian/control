@@ -7,7 +7,7 @@ Standards-Version: 3.9.4
 Section: libs
 Homepage: http://yubico.github.io/yubico-c-client/
 Vcs-Browser: https://github.com/Yubico/yubico-c-client-dpkg
-Vcs-Git: git@github.com:Yubico/yubico-c-client-dpkg.git
+Vcs-Git: git://github.com/Yubico/yubico-c-client-dpkg.git
 
 Package: libykclient3
 Architecture: any
