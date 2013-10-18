@@ -1,3 +1,115 @@
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.12.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* tests/Makefile.am: Drop unnecessary -lcurl in self-tests.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* libykclient.map: Fix versioning script.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am, NEWS, configure.ac, libykclient.map,
+	m4/ld-version-script.m4, m4/valgrind-tests.m4, tests/Makefile.am: 
+	Add shared library versioning script.  Use valgrind for self-tests.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Improve NEWS.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* m4/.placeholder: Remove.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* COPYING: Bump years.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* doc: Remove doc/.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, configure.ac: Use build-aux/.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Drop wiki traces.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* .gitmodules: Drop .gitmodules.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* README: Improve README.
+
+2013-10-07  Klas Lindfors <klas@yubico.com>
+
+	* tool.c, ykclient.c: add CAINFO patch from github user Mrten adds ykclient_set_ca_info() to the api resolves #24
+
+2013-10-02  Klas Lindfors <klas@yubico.com>
+
+	* : commit 76f2f3c166f70b17ceb753b36a86d8665211cd2b Author: Klas
+	Lindfors <klas@yubico.com> Date:   Wed Oct 2 14:35:01 2013 +0200
+
+2013-10-02  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: drop unused variable
+
+2013-10-02  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: better variable name, doesn't cause shadowing
+
+2013-10-01  Klas Lindfors <klas@yubico.com>
+
+	* .travis.yml: install help2man
+
+2013-10-01  Klas Lindfors <klas@yubico.com>
+
+	* tests/selftest.c: test with new url format
+
+2013-10-01  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c, ykclient.h: add support for "new" url templates without the query string
+
+2013-10-01  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: break out expanding URL
+
+2013-08-26  Simon Josefsson <simon@josefsson.org>
+
+	* configure.ac: Print more build information.
+
+2013-08-26  Simon Josefsson <simon@josefsson.org>
+
+	* README: Revert "add note about autoreconf and curl m4 file." This reverts commit 3c96692c1724e71aac8cbc7f1135445fbe040ca3.
+
+2013-08-26  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore, Makefile.am, NEWS, configure.ac, m4/pkg.m4,
+	tests/Makefile.am: Use pkg-config to find curl.
+
+2013-08-19  Klas Lindfors <klas@yubico.com>
+
+	* README: add note about autoreconf and curl m4 file.  references #21
+
+2013-07-24  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
+2013-07-24  Simon Josefsson <simon@josefsson.org>
+
+	* .gitignore: Ignore more.
+
 2013-07-24  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 2.11.

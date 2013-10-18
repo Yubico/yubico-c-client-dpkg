@@ -26,7 +26,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-AC_INIT([ykclient], [2.11], [yubico-devel@googlegroups.com])
+AC_INIT([ykclient], [2.12], [yubico-devel@googlegroups.com])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
 # Library code modified:                              REVISION++
@@ -34,7 +35,7 @@ AC_CONFIG_MACRO_DIR([m4])
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
 AC_SUBST(LT_CURRENT, 8)
-AC_SUBST(LT_REVISION, 1)
+AC_SUBST(LT_REVISION, 2)
 AC_SUBST(LT_AGE, 5)
 
 AM_INIT_AUTOMAKE([1.11 -Wall -Werror])
@@ -47,8 +48,10 @@ AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 
-LIBCURL_CHECK_CONFIG([yes], [], [], [
-  AC_MSG_ERROR([[Libcurl header files not found, install libcurl-dev.]])])
+gl_LD_VERSION_SCRIPT
+gl_VALGRIND_TESTS
+
+PKG_CHECK_MODULES([LIBCURL], [libcurl])
 
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],
@@ -93,12 +96,17 @@ AC_OUTPUT
 
 AC_MSG_NOTICE([summary of build options:
 
-  version:          ${VERSION} shared $LT_CURRENT:$LT_REVISION:$LT_AGE major $YKCLIENT_VERSION_MAJOR minor $YKCLIENT_VERSION_MINOR patch $YKCLIENT_VERSION_PATCH number $YKCLIENT_VERSION_NUMBER
+  Version:          ${VERSION}
+     Library:       current $LT_CURRENT revision $LT_REVISION age $LT_AGE
+     Header:        major $YKCLIENT_VERSION_MAJOR minor $YKCLIENT_VERSION_MINOR patch $YKCLIENT_VERSION_PATCH number $YKCLIENT_VERSION_NUMBER
   Host type:        ${host}
   Install prefix:   ${prefix}
   Compiler:         ${CC}
-  Shared library:   ${enable_shared}
-  Static library:   ${enable_static}
-  Curl CPPFLAGS:    ${LIBCURL_CPPFLAGS}
-        LDFLAGS:    ${LIBCURL}
+  Compiler CFLAGS:  ${CFLAGS}
+  Warning flags:    ${WARN_CFLAGS}
+  Library types:    Shared=${enable_shared}, Static=${enable_static}
+  Curl CFLAGS:      ${LIBCURL_CFLAGS}
+      LDFLAGS:      ${LIBCURL_LIBS}
+  Valgrind:         ${VALGRIND}
+  Version script:   $have_ld_version_script
 ])
