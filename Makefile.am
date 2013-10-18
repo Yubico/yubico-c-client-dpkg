@@ -28,7 +28,7 @@
 
 SUBDIRS = . tests
 
-AM_CPPFLAGS = @LIBCURL_CPPFLAGS@
+AM_CPPFLAGS = $(LIBCURL_CFLAGS)
 ACLOCAL_AMFLAGS = -I m4
 AM_CFLAGS = $(WARN_CFLAGS)
 
@@ -46,10 +46,16 @@ libykclient_la_SOURCES += ykclient.c ykclient_version.c
 libykclient_la_SOURCES += sha.h sha-private.h hmac.c sha1.c usha.c	\
 			sha224-256.c sha384-512.c
 libykclient_la_SOURCES += cencode.h cencode.c cdecode.h cdecode.c
-libykclient_la_LIBADD = @LIBCURL@
+libykclient_la_SOURCES += libykclient.map
+libykclient_la_LIBADD = $(LIBCURL_LIBS)
 libykclient_la_LDFLAGS = -no-undefined \
-	-export-symbols-regex '^ykclient_.*' \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+
+if HAVE_LD_VERSION_SCRIPT
+libykclient_la_LDFLAGS += -Wl,--version-script=$(srcdir)/libykclient.map
+else
+libykclient_la_LDFLAGS += -export-symbols-regex '^ykclient_.*'
+endif
 
 # The command line tools.
 
@@ -103,9 +109,3 @@ release:
 	cd $(srcdir) && git tag -u $(KEYID) -m $(VERSION) $(PACKAGE)-$(VERSION)
 	cd $(srcdir) && git push --tags
 	$(YUBICO_GITHUB_REPO)/publish $(PROJECT) $(VERSION) $(PACKAGE)-$(VERSION).tar.gz*
-	@if test -d $(srcdir)/../wiki-$(PROJECT); then \
-		cd $(srcdir) && \
-		cp README ../wiki-$(PROJECT)/ReadMe.asciidoc && \
-		cd ../wiki-$(PROJECT) && \
-		git commit -m Sync. ReadMe.asciidoc; \
-	fi
