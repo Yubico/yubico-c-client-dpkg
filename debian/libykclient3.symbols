@@ -1,4 +1,6 @@
 libykclient.so.3 libykclient3 #MINVER#
+ Base@Base 2.12
+ YKCLIENT_2.12@YKCLIENT_2.12 2.12
  ykclient_done@Base 2.9
  ykclient_get_last_url@Base 2.9
  ykclient_init@Base 2.9
@@ -8,11 +10,13 @@ libykclient.so.3 libykclient3 #MINVER#
  ykclient_server_response_init@Base 2.9
  ykclient_server_response_parse@Base 2.9
  ykclient_server_response_verify_signature@Base 2.9
+ ykclient_set_ca_info@YKCLIENT_2.12 2.12
  ykclient_set_ca_path@Base 2.9
  ykclient_set_client@Base 2.9
  ykclient_set_client_b64@Base 2.9
  ykclient_set_client_hex@Base 2.9
  ykclient_set_nonce@Base 2.9
+ ykclient_set_url_bases@YKCLIENT_2.12 2.12
  ykclient_set_url_template@Base 2.9
  ykclient_set_url_templates@Base 2.9
  ykclient_set_verify_signature@Base 2.9

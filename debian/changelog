@@ -1,6 +1,7 @@
 ykclient (2.12-1) unstable; urgency=low
 
   * New upstream version.
+  * Updated libykclient3.symbols with new symbols.
 
  -- Simon Josefsson <simon@yubico.com>  Fri, 18 Oct 2013 23:37:14 +0200
 
