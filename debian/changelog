@@ -1,3 +1,11 @@
+ykclient (2.12-3) unstable; urgency=low
+
+  [ Klas Lindfors ]
+  * Fix watch file.
+  * Add pkg-config build-dep.  Closes: #747765.
+
+ -- Simon Josefsson <simon@josefsson.org>  Wed, 21 May 2014 09:10:14 +0200
+
 ykclient (2.12-2) unstable; urgency=low
 
   * Upgrade to Standards-Version from 3.9.4 to 3.9.5.
