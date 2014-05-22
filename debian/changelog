@@ -1,3 +1,9 @@
+ykclient (2.12-4) unstable; urgency=low
+
+  * Fix build warnings about hardening failures.
+
+ -- Simon Josefsson <simon@josefsson.org>  Thu, 22 May 2014 12:04:23 +0200
+
 ykclient (2.12-3) unstable; urgency=low
 
   [ Klas Lindfors ]
