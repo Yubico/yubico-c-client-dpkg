@@ -1,3 +1,10 @@
+ykclient (2.13-1) unstable; urgency=low
+
+  * New upstream version.
+  * Improve copyright info.
+
+ -- Simon Josefsson <simon@josefsson.org>  Fri, 12 Sep 2014 21:52:13 +0200
+
 ykclient (2.12-4) unstable; urgency=low
 
   * Fix build warnings about hardening failures.
