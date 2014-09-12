@@ -2,6 +2,7 @@ ykclient (2.13-1) unstable; urgency=low
 
   * New upstream version.
   * Improve copyright info.
+  * Update upstream-signing-key.pgp.
 
  -- Simon Josefsson <simon@josefsson.org>  Fri, 12 Sep 2014 21:52:13 +0200
 
