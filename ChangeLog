@@ -1,3 +1,49 @@
+2014-09-12  Simon Josefsson <simon@josefsson.org>
+
+	* Makefile.am: Don't mention github.
+
+2014-09-12  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Version 2.13.
+
+2014-09-12  Simon Josefsson <simon@josefsson.org>
+
+	* BLURB, NEWS: Doc fix.
+
+2014-08-21  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS: Add.
+
+2014-06-03  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.h: add prototype for ykclient_set_ca_info() to ykclient.h
+
+2014-06-03  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: skip over responses where the status isn't CURLE_OK fixes #25
+
+2014-06-03  Klas Lindfors <klas@yubico.com>
+
+	* tests/selftest.c: add a test exposing issue #25
+
+2014-06-03  Klas Lindfors <klas@yubico.com>
+
+	* tests/Makefile.am: add the warnings package for our tests
+
+2014-03-18  Klas Lindfors <klas@yubico.com>
+
+	* BLURB: add BLURB
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* cdecode.c, cdecode.h, cencode.c, cencode.h, hmac.c,
+	sha-private.h, sha.h, sha1.c, sha224-256.c, sha384-512.c, tool.c,
+	usha.c, ykclient.c, ykclient.h: Indent code.
+
+2013-10-18  Simon Josefsson <simon@josefsson.org>
+
+	* NEWS, configure.ac: Bump versions.
+
 2013-10-18  Simon Josefsson <simon@josefsson.org>
 
 	* NEWS: Version 2.12.
