@@ -1,3 +1,10 @@
+ykclient (2.14-1) unstable; urgency=low
+
+  * New upstream version.
+  * Upgrade to Standards-Version from 3.9.5 to 3.9.6.
+
+ -- Simon Josefsson <simon@josefsson.org>  Thu, 05 Mar 2015 13:59:51 +0100
+
 ykclient (2.13-1) unstable; urgency=low
 
   * New upstream version.
