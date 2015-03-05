@@ -26,7 +26,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-AC_INIT([ykclient], [2.13], [yubico-devel@googlegroups.com])
+AC_INIT([ykclient], [2.14], [yubico-devel@googlegroups.com])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -35,7 +35,7 @@ AC_CONFIG_MACRO_DIR([m4])
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
 AC_SUBST(LT_CURRENT, 8)
-AC_SUBST(LT_REVISION, 3)
+AC_SUBST(LT_REVISION, 4)
 AC_SUBST(LT_AGE, 5)
 
 AM_INIT_AUTOMAKE([1.11 -Wall -Werror])
@@ -52,6 +52,13 @@ gl_LD_VERSION_SCRIPT
 gl_VALGRIND_TESTS
 
 PKG_CHECK_MODULES([LIBCURL], [libcurl])
+
+AC_ARG_ENABLE([coverage],
+              [AS_HELP_STRING([--enable-coverage],
+                              [use Gcov to test the test suite])],
+                              [],
+                              [enable_cov=no])
+AM_CONDITIONAL([ENABLE_COV],[test '!' "$enable_cov" = no])
 
 AC_ARG_ENABLE([gcc-warnings],
   [AS_HELP_STRING([--enable-gcc-warnings],

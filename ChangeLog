@@ -1,3 +1,49 @@
+2015-03-05  Klas Lindfors <klas@yubico.com>
+
+	* NEWS: NEWS for 2.14
+
+2015-02-20  Klas Lindfors <klas@yubico.com>
+
+	* tool.c: client id is unsigned
+
+2015-02-12  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: move user_agent out of struct since it's static mark the ykc struct as static move ADD_HASH around for clarity
+
+2015-02-09  Klas Lindfors <klas@yubico.com>
+
+	* cdecode.c, ykclient.c, ykclient.h: fix indentation
+
+2015-01-21  Klas Lindfors <klas@yubico.com>
+
+	* .gitignore, .travis.yml, Makefile.am, build-and-test.sh,
+	configure.ac: add coverage processing
+
+2015-01-14  Klas Lindfors <klali@avm.se>
+
+	* : Merge pull request #30 from NetworksAreMadeOfString/master Default URL templates now use SSL to prevent tampering
+
+2015-01-07  Klas Lindfors <klali@avm.se>
+
+	* : Merge pull request #29 from
+	noahwilliamsson/fix-curl_easy_escape-usage [PATCH] Use argument of proper type in call to curl_easy_escape()
+
+2014-10-29  Henrik Stråth <minisu@users.noreply.github.com>
+
+	* README: Update README
+
+2014-10-29  Henrik Stråth <henrik@yubico.com>
+
+	* README.adoc: symlinked README
+
+2014-10-29  Henrik Stråth <minisu@users.noreply.github.com>
+
+	* README: Update README
+
+2014-09-15  Klas Lindfors <klas@yubico.com>
+
+	* NEWS, configure.ac: bump versions
+
 2014-09-12  Simon Josefsson <simon@josefsson.org>
 
 	* Makefile.am: Don't mention github.
@@ -162,13 +208,13 @@
 
 2013-07-05  Simon Josefsson <simon@josefsson.org>
 
-	* .gitignore, Makefile.am, NEWS, b64/cdecode.c, b64/cdecode.h,
-	b64/cencode.c, b64/cencode.h, cdecode.c, cdecode.h, cencode.c,
-	cencode.h, configure.ac, hmac.c, rfc4634/hmac.c,
-	rfc4634/sha-private.h, rfc4634/sha.h, rfc4634/sha1.c,
-	rfc4634/sha224-256.c, rfc4634/sha384-512.c, rfc4634/usha.c,
-	sha-private.h, sha.h, sha1.c, sha224-256.c, sha384-512.c,
-	tests/Makefile.am, tests/selftest.c, usha.c, ykclient.c,
+	* .gitignore, Makefile.am, NEWS, b64/cdecode.c => cdecode.c,
+	b64/cdecode.h => cdecode.h, b64/cencode.c => cencode.c,
+	b64/cencode.h => cencode.h, configure.ac, rfc4634/hmac.c => hmac.c,
+	rfc4634/sha-private.h => sha-private.h, rfc4634/sha.h => sha.h,
+	rfc4634/sha1.c => sha1.c, rfc4634/sha224-256.c => sha224-256.c,
+	rfc4634/sha384-512.c => sha384-512.c, tests/Makefile.am,
+	tests/selftest.c, rfc4634/usha.c => usha.c, ykclient.c,
 	ykclient_server_response.c: Fix subdir-objects breakage with latest
 	automake.
 
@@ -776,7 +822,7 @@
 
 2011-02-28  Fredrik Thulin <fredrik@yubico.com>
 
-	* Makefile.am, configure.ac, selftest.c, tests/Makefile.am,
+	* Makefile.am, configure.ac, tests/Makefile.am, selftest.c =>
 	tests/selftest.c: Fix insecure rpath issue.  http://code.google.com/p/yubico-c-client/issues/detail?id=6
 
 2011-02-24  Fredrik Thulin <fredrik@yubico.com>
@@ -1006,8 +1052,8 @@
 
 2009-03-25  Simon Josefsson <simon@josefsson.org>
 
-	* Makefile.am, NEWS, configure.ac, libykclient.c, libykclient.h,
-	selftest.c, tool.c, ykclient.c, ykclient.h: Cleanup library
+	* Makefile.am, NEWS, configure.ac, libykclient.c, selftest.c,
+	tool.c, ykclient.c, libykclient.h => ykclient.h: Cleanup library
 	interface.
 
 2009-01-13  Simon Josefsson <simon@josefsson.org>
@@ -1040,7 +1086,7 @@
 
 2009-01-13  Simon Josefsson <simon@josefsson.org>
 
-	* Makefile.am, configure.ac, libcurl.m4, m4/libcurl.m4: Put m4
+	* Makefile.am, configure.ac, libcurl.m4 => m4/libcurl.m4: Put m4
 	macros in m4/.
 
 2008-09-17  Simon Josefsson <simon@josefsson.org>

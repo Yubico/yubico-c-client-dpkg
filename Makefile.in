@@ -111,6 +111,7 @@ host_triplet = @host@
 @HAVE_LD_VERSION_SCRIPT_TRUE@am__append_1 = -Wl,--version-script=$(srcdir)/libykclient.map
 @HAVE_LD_VERSION_SCRIPT_FALSE@am__append_2 = -export-symbols-regex '^ykclient_.*'
 bin_PROGRAMS = ykclient$(EXEEXT)
+@ENABLE_COV_TRUE@am__append_3 = --coverage
 subdir = .
 DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
@@ -446,7 +447,7 @@ top_srcdir = @top_srcdir@
 SUBDIRS = . tests
 AM_CPPFLAGS = $(LIBCURL_CFLAGS)
 ACLOCAL_AMFLAGS = -I m4
-AM_CFLAGS = $(WARN_CFLAGS)
+AM_CFLAGS = $(WARN_CFLAGS) $(am__append_3)
 
 # The library.
 lib_LTLIBRARIES = libykclient.la
@@ -468,6 +469,7 @@ ykclient_LDADD = ./libykclient.la
 # Man page
 dist_man_MANS = ykclient.1
 DISTCLEANFILES = $(dist_man_MANS)
+@ENABLE_COV_TRUE@AM_LDFLAGS = --coverage
 PROJECT = yubico-c-client
 all: all-recursive
 
@@ -1048,10 +1050,11 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+@ENABLE_COV_FALSE@clean-local:
 clean: clean-recursive
 
 clean-am: clean-binPROGRAMS clean-generic clean-libLTLIBRARIES \
-	clean-libtool mostlyclean-am
+	clean-libtool clean-local mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
@@ -1130,14 +1133,14 @@ uninstall-man: uninstall-man1
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am \
 	am--refresh check check-am clean clean-binPROGRAMS \
 	clean-cscope clean-generic clean-libLTLIBRARIES clean-libtool \
-	cscope cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
-	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
-	distcheck distclean distclean-compile distclean-generic \
-	distclean-libtool distclean-tags distcleancheck distdir \
-	distuninstallcheck dvi dvi-am html html-am info info-am \
-	install install-am install-binPROGRAMS install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am \
+	clean-local cscope cscopelist-am ctags ctags-am dist dist-all \
+	dist-bzip2 dist-gzip dist-lzip dist-shar dist-tarZ dist-xz \
+	dist-zip distcheck distclean distclean-compile \
+	distclean-generic distclean-libtool distclean-tags \
+	distcleancheck distdir distuninstallcheck dvi dvi-am html \
+	html-am info info-am install install-am install-binPROGRAMS \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
 	install-includeHEADERS install-info install-info-am \
 	install-libLTLIBRARIES install-man install-man1 install-pdf \
 	install-pdf-am install-ps install-ps-am install-strip \
@@ -1154,6 +1157,26 @@ ykclient.1: $(builddir)/ykclient $(srcdir)/tool.c $(srcdir)/configure.ac
 		--output=$@ $(builddir)/ykclient$(EXEEXT) \
 		--name="YubiCloud One-Time-Password Validation Client" \
 		--no-info
+
+@ENABLE_COV_TRUE@cov-reset:
+@ENABLE_COV_TRUE@	rm -fr coverage
+@ENABLE_COV_TRUE@	find . -name "*.gcda" -exec rm {} \;
+@ENABLE_COV_TRUE@	lcov --directory . --zerocounters
+
+@ENABLE_COV_TRUE@cov-report:
+@ENABLE_COV_TRUE@	mkdir -p coverage
+@ENABLE_COV_TRUE@	lcov --compat-libtool --directory . --capture --output-file coverage/app.info
+@ENABLE_COV_TRUE@	lcov --extract coverage/app.info '*.c' --output-file coverage/app2.info
+@ENABLE_COV_TRUE@	genhtml -o coverage/ coverage/app2.info
+
+@ENABLE_COV_TRUE@cov:
+@ENABLE_COV_TRUE@	make cov-report
+
+@ENABLE_COV_TRUE@clean-local:
+@ENABLE_COV_TRUE@	make cov-reset
+
+@ENABLE_COV_TRUE@check:
+@ENABLE_COV_TRUE@	make cov
 
 # Release
 
