@@ -1,6 +1,7 @@
 libykclient.so.3 libykclient3 #MINVER#
  Base@Base 2.12
  YKCLIENT_2.12@YKCLIENT_2.12 2.12
+ YKCLIENT_2.15@YKCLIENT_2.15 2.15
  ykclient_done@Base 2.9
  ykclient_get_last_url@Base 2.9
  ykclient_init@Base 2.9
@@ -30,3 +31,5 @@ libykclient.so.3 libykclient3 #MINVER#
  ykclient_handle_done@Base 2.11
  ykclient_handle_init@Base 2.11
  ykclient_request_process@Base 2.11
+ ykclient_get_server_response@YKCLIENT_2.15 2.15
+ ykclient_set_proxy@YKCLIENT_2.15 2.15
