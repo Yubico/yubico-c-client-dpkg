@@ -4,6 +4,7 @@ ykclient (2.15-1) unstable; urgency=low
   * Use https URLs in Vcs-Git.
   * Update Standards-Version from 3.9.6 to 3.9.8.
   * Add new library symbols.
+  * Build with hardening=+all.
 
  -- Simon Josefsson <simon@josefsson.org>  Mon, 08 Aug 2016 10:45:52 +0200
 
