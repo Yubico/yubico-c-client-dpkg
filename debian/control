@@ -3,11 +3,11 @@ Priority: optional
 Maintainer: Tollef Fog Heen <tfheen@debian.org>
 Uploaders: Simon Josefsson <simon@josefsson.org>, Klas Lindfors <klas@yubico.com>, Dain Nilsson <dain@yubico.com>
 Build-Depends: debhelper (>= 9), autotools-dev, libcurl4-gnutls-dev | libcurl4-openssl-dev, chrpath, help2man, dh-autoreconf, pkg-config
-Standards-Version: 3.9.6
+Standards-Version: 3.9.8
 Section: libs
 Homepage: https://developers.yubico.com/yubico-c-client/
 Vcs-Browser: https://github.com/Yubico/yubico-c-client-dpkg
-Vcs-Git: git://github.com/Yubico/yubico-c-client-dpkg.git
+Vcs-Git: https://github.com/Yubico/yubico-c-client-dpkg.git
 
 Package: libykclient3
 Architecture: any
