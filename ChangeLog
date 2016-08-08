@@ -1,3 +1,45 @@
+2015-11-12  Klas Lindfors <klas@yubico.com>
+
+	* NEWS: NEWS for 2.15
+
+2015-11-11  Klas Lindfors <klali@avm.se>
+
+	* : Merge pull request #36 from mikemn/master Add proxy support via Curl
+
+2015-07-09  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: make sure there is always at least one handle found with clang scan-build
+
+2015-07-05  Klas Lindfors <klas@yubico.com>
+
+	* Makefile.am, configure.ac: add help2adoc for releases
+
+2015-06-24  Klas Lindfors <klas@yubico.com>
+
+	* configure.ac: bump libtool variables correctly since a symbol was
+	added
+
+2015-06-24  Klas Lindfors <klas@yubico.com>
+
+	* tool.c: tool: use server response to print out more debug info
+
+2015-06-24  Klas Lindfors <klas@yubico.com>
+
+	* libykclient.map, ykclient.c, ykclient.h: add an interface to fetch
+	the last server response
+
+2015-06-24  Klas Lindfors <klas@yubico.com>
+
+	* ykclient.c: add timestamp to the default query
+
+2015-06-15  Klas Lindfors <klas@yubico.com>
+
+	* tool.c: add --cai to commandline tool help
+
+2015-03-05  Klas Lindfors <klas@yubico.com>
+
+	* NEWS, configure.ac: bump versions
+
 2015-03-05  Klas Lindfors <klas@yubico.com>
 
 	* NEWS: NEWS for 2.14

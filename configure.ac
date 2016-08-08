@@ -26,7 +26,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-AC_INIT([ykclient], [2.14], [yubico-devel@googlegroups.com])
+AC_INIT([ykclient], [2.15], [yubico-devel@googlegroups.com])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -34,9 +34,9 @@ AC_CONFIG_MACRO_DIR([m4])
 # Interfaces changed/added/removed:   CURRENT++       REVISION=0
 # Interfaces added:                             AGE++
 # Interfaces removed:                           AGE=0
-AC_SUBST(LT_CURRENT, 8)
-AC_SUBST(LT_REVISION, 4)
-AC_SUBST(LT_AGE, 5)
+AC_SUBST(LT_CURRENT, 9)
+AC_SUBST(LT_REVISION, 0)
+AC_SUBST(LT_AGE, 6)
 
 AM_INIT_AUTOMAKE([1.11 -Wall -Werror])
 AM_SILENT_RULES([yes])
@@ -45,6 +45,7 @@ AC_PROG_CC
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 
 AM_MISSING_PROG(HELP2MAN, help2man, $missing_dir)
+AM_MISSING_PROG(HELP2ADOC, help2adoc, $missing_dir)
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 

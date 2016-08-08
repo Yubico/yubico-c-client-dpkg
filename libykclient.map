@@ -65,3 +65,9 @@ YKCLIENT_2.12 {
     ykclient_set_ca_info;
     ykclient_set_url_bases;
 } Base;
+
+YKCLIENT_2.15 {
+  global:
+    ykclient_get_server_response;
+    ykclient_set_proxy;
+} YKCLIENT_2.12;

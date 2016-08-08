@@ -53,7 +53,11 @@ const char *usage =
   "                   \"http://api.yubico.com/wsapi/verify\"\n"
   "    --ca CADIR     Path to directory containing Certificate Authoritity,\n"
   "                   e.g., \"/usr/local/etc/CERTS\"\n"
+  "    --cai CAFILE   Path to a file holding one or more certificated to\n"
+  "                   verify the peer with\n"
   "    --apikey Key   API key for HMAC validation of request/response\n"
+  "    --proxy ip:port  Connect to validation service through a proxy,\n"
+  "                     e.g., \"socks5h://user:pass@127.0.0.1:1080\"\n"
   "\n"
   "Exit status is 0 on success, 1 if there is a hard failure, 2 if the\n"
   "OTP was replayed, 3 for other soft OTP-related failures.\n"
@@ -64,6 +68,7 @@ static struct option long_options[] = {
   {"ca", 1, 0, 'c'},
   {"cai", 1, 0, 'i'},
   {"apikey", 1, 0, 'a'},
+  {"proxy", 1, 0, 'p'},
   {"debug", 0, 0, 'd'},
   {"help", 0, 0, 'h'},
   {"version", 0, 0, 'V'},
@@ -74,7 +79,7 @@ static struct option long_options[] = {
 static void
 parse_args (int argc, char *argv[],
 	    unsigned int *client_id, char **token, char **url, char **ca,
-	    char **cai, char **api_key, int *debug)
+	    char **cai, char **api_key, char **proxy, int *debug)
 {
   while (1)
     {
@@ -131,6 +136,15 @@ parse_args (int argc, char *argv[],
 	  *cai = optarg;
 	  break;
 
+    case 'p':
+	  if (strlen(optarg) < 1)
+	    {
+	      fprintf (stderr, "error: must give a valid proxy [scheme]://ip:port");
+	      exit (EXIT_FAILURE);
+	    }
+	  *proxy = optarg;
+	  break;
+
 	case 'h':
 	  printf ("%s", usage);
 	  exit (EXIT_SUCCESS);
@@ -172,20 +186,17 @@ int
 main (int argc, char *argv[])
 {
   unsigned int client_id;
-  char *token, *url = NULL, *ca = NULL, *api_key = NULL, *cai = NULL;
+  char *token, *url = NULL, *ca = NULL, *api_key = NULL, *cai = NULL, *proxy = NULL;
   int debug = 0;
   ykclient_rc ret;
   ykclient_t *ykc = NULL;
 
-  parse_args (argc, argv, &client_id, &token, &url, &ca, &cai, &api_key,
+  parse_args (argc, argv, &client_id, &token, &url, &ca, &cai, &api_key, &proxy,
 	      &debug);
 
-  if (ca || cai)
-    {
-      ret = ykclient_init (&ykc);
-      if (ret != YKCLIENT_OK)
-	return EXIT_FAILURE;
-    }
+  ret = ykclient_init (&ykc);
+  if (ret != YKCLIENT_OK)
+    return EXIT_FAILURE;
 
   if (ca)
     {
@@ -195,6 +206,10 @@ main (int argc, char *argv[])
   if (cai)
     {
       ykclient_set_ca_info (ykc, cai);
+    }
+  if (proxy)
+    {
+      ykclient_set_proxy (ykc, proxy);
     }
 
   if (debug)
@@ -210,13 +225,29 @@ main (int argc, char *argv[])
       fprintf (stderr, "  token: %s\n", token);
       if (api_key != NULL)
 	fprintf (stderr, "  api key: %s\n", api_key);
+      if (proxy != NULL)
+	fprintf (stderr, "Using proxy: %s\n", proxy);
     }
 
   ret = ykclient_verify_otp_v2 (ykc, token, client_id, NULL, 1,
 				(const char **) &url, api_key);
 
   if (debug)
-    printf ("Verification output (%d): %s\n", ret, ykclient_strerror (ret));
+    {
+      const ykclient_server_response_t *srv_response = ykclient_get_server_response (ykc);
+      printf ("Response from: %s\n", ykclient_get_last_url (ykc));
+      printf ("Verification output (%d): %s\n", ret, ykclient_strerror (ret));
+      printf ("  otp: %s\n", ykclient_server_response_get (srv_response, "otp"));
+      printf ("  nonce: %s\n", ykclient_server_response_get (srv_response, "nonce"));
+      printf ("  t: %s\n", ykclient_server_response_get (srv_response, "t"));
+      printf ("  timestamp: %s\n", ykclient_server_response_get (srv_response, "timestamp"));
+      printf ("  sessioncounter: %s\n", ykclient_server_response_get (srv_response, "sessioncounter"));
+      printf ("  sessionuse: %s\n", ykclient_server_response_get (srv_response, "sessionuse"));
+      printf ("  sl: %s\n", ykclient_server_response_get (srv_response, "sl"));
+      printf ("  status: %s\n", ykclient_server_response_get (srv_response, "status"));
+    }
+
+  ykclient_done(&ykc);
 
   if (ret == YKCLIENT_REPLAYED_OTP)
     return 2;
