@@ -52,6 +52,7 @@
 #define ADD_OTP "&otp="
 #define ADD_HASH "&h="
 #define ADD_ID "?id="
+#define ADD_TS "&timestamp=1"
 
 #define TEMPLATE_FORMAT_OLD 1
 #define TEMPLATE_FORMAT_NEW 2
@@ -60,6 +61,7 @@ struct ykclient_st
 {
   const char *ca_path;
   const char *ca_info;
+  const char *proxy;
   size_t num_templates;
   char **url_templates;
   int template_format;
@@ -71,6 +73,7 @@ struct ykclient_st
   char *nonce;
   char nonce_supplied;
   int verify_signature;
+  ykclient_server_response_t *srv_response;
 };
 
 struct curl_data
@@ -152,6 +155,7 @@ ykclient_init (ykclient_t ** ykc)
 
   p->ca_path = NULL;
   p->ca_info = NULL;
+  p->proxy = NULL;
 
   p->key = NULL;
   p->keylen = 0;
@@ -161,6 +165,8 @@ ykclient_init (ykclient_t ** ykc)
 
   p->nonce = NULL;
   p->nonce_supplied = 0;
+
+  p->srv_response = NULL;
 
   /* 
    * Verification of server signature can only be done if there is
@@ -200,6 +206,11 @@ ykclient_done (ykclient_t ** ykc)
 	      free ((*ykc)->url_templates[i]);
 	    }
 	  free ((*ykc)->url_templates);
+	}
+
+      if ((*ykc)->srv_response)
+	{
+	  ykclient_server_response_free((*ykc)->srv_response);
 	}
 
       free ((*ykc)->key_buf);
@@ -320,6 +331,17 @@ ykclient_handle_init (ykclient_t * ykc, ykclient_handle_t ** ykh)
 	  curl_easy_setopt (easy, CURLOPT_CAINFO, ykc->ca_info);
 	}
 
+      if (ykc->proxy)
+	{
+	  /*
+	   *  The proxy string may be prefixed with [scheme]://ip:port to specify which kind of proxy is used.
+	   *  Valid choices are: socks4://, socks4a://, socks5:// or socks5h://
+	   *  Use socks5h to ask the proxy to do the dns resolving.
+	   *  If no scheme or port is specified HTTP proxy port 1080 will be used.
+	   */
+	  curl_easy_setopt (easy, CURLOPT_PROXY, ykc->proxy);
+	}
+
       curl_easy_setopt (easy, CURLOPT_WRITEDATA, (void *) data);
       curl_easy_setopt (easy, CURLOPT_PRIVATE, (void *) data);
       curl_easy_setopt (easy, CURLOPT_WRITEFUNCTION, curl_callback);
@@ -328,6 +350,11 @@ ykclient_handle_init (ykclient_t * ykc, ykclient_handle_t ** ykh)
       curl_multi_add_handle (p->multi, easy);
       p->easy[p->num_easy] = easy;
     }
+
+  if(p->num_easy == 0) {
+    ykclient_handle_done (&p);
+    return YKCLIENT_BAD_INPUT;
+  }
 
   /* Take this opportunity to allocate the array for expanded URLs */
   p->url_exp = malloc (sizeof (char *) * p->num_easy);
@@ -561,6 +588,17 @@ ykclient_set_ca_info (ykclient_t * ykc, const char *ca_info)
 {
   ykc->ca_info = ca_info;
 }
+
+/** Set the proxy
+ *
+ * Must be called before creating handles.
+ */
+void
+ykclient_set_proxy (ykclient_t * ykc, const char *proxy)
+{
+  ykc->proxy = proxy;
+}
+
 
 /** Set a single URL template
  *
@@ -838,7 +876,7 @@ ykclient_expand_new_url (const char *template,
 {
   size_t len =
     strlen (template) + strlen (encoded_otp) + strlen (ADD_OTP) +
-    strlen (ADD_ID) + 1;
+    strlen (ADD_ID) + strlen(ADD_TS) + 1;
   len += snprintf (NULL, 0, "%d", client_id);
 
   if (nonce)
@@ -854,12 +892,12 @@ ykclient_expand_new_url (const char *template,
 
   if (nonce)
     {
-      snprintf (*url_exp, len, "%s" ADD_ID "%d" ADD_NONCE "%s" ADD_OTP "%s",
+      snprintf (*url_exp, len, "%s" ADD_ID "%d" ADD_NONCE "%s" ADD_OTP "%s" ADD_TS,
 		template, client_id, nonce, encoded_otp);
     }
   else
     {
-      snprintf (*url_exp, len, "%s" ADD_ID "%d" ADD_OTP "%s", template,
+      snprintf (*url_exp, len, "%s" ADD_ID "%d" ADD_OTP "%s" ADD_TS, template,
 		client_id, encoded_otp);
     }
   return YKCLIENT_OK;
@@ -1162,7 +1200,6 @@ ykclient_request_send (ykclient_t * ykc, ykclient_handle_t * ykh,
 {
   ykclient_rc out = YKCLIENT_OK;
   int requests;
-  ykclient_server_response_t *srv_response = NULL;
 
   if (!ykc->num_templates)
     {
@@ -1268,22 +1305,27 @@ ykclient_request_send (ykclient_t * ykc, ykclient_handle_t * ykh,
 	  curl_easy_getinfo (curl_easy, CURLINFO_EFFECTIVE_URL, &url_used);
 	  strncpy (ykc->last_url, url_used, sizeof (ykc->last_url));
 
-	  srv_response = ykclient_server_response_init ();
-	  if (srv_response == NULL)
+	  if(ykc->srv_response)
+	    {
+	      ykclient_server_response_free (ykc->srv_response);
+	    }
+
+	  ykc->srv_response = ykclient_server_response_init ();
+	  if (ykc->srv_response == NULL)
 	    {
 	      out = YKCLIENT_PARSE_ERROR;
 	      goto finish;
 	    }
 
 	  out = ykclient_server_response_parse (data->curl_chunk,
-						srv_response);
+						ykc->srv_response);
 	  if (out != YKCLIENT_OK)
 	    {
 	      goto finish;
 	    }
 
 	  if (ykc->verify_signature != 0 &&
-	      ykclient_server_response_verify_signature (srv_response,
+	      ykclient_server_response_verify_signature (ykc->srv_response,
 							 ykc->key,
 							 ykc->keylen))
 	    {
@@ -1291,7 +1333,7 @@ ykclient_request_send (ykclient_t * ykc, ykclient_handle_t * ykh,
 	      goto finish;
 	    }
 
-	  status = ykclient_server_response_get (srv_response, "status");
+	  status = ykclient_server_response_get (ykc->srv_response, "status");
 	  if (!status)
 	    {
 	      out = YKCLIENT_PARSE_ERROR;
@@ -1314,7 +1356,7 @@ ykclient_request_send (ykclient_t * ykc, ykclient_handle_t * ykh,
 	      if (nonce)
 		{
 		  char *server_nonce =
-		    ykclient_server_response_get (srv_response,
+		    ykclient_server_response_get (ykc->srv_response,
 						  "nonce");
 		  if (server_nonce == NULL || strcmp (nonce, server_nonce))
 		    {
@@ -1323,7 +1365,7 @@ ykclient_request_send (ykclient_t * ykc, ykclient_handle_t * ykh,
 		    }
 		}
 
-	      server_otp = ykclient_server_response_get (srv_response, "otp");
+	      server_otp = ykclient_server_response_get (ykc->srv_response, "otp");
 	      if (server_otp == NULL || strcmp (yubikey, server_otp))
 		{
 		  out = YKCLIENT_HMAC_ERROR;
@@ -1337,17 +1379,12 @@ ykclient_request_send (ykclient_t * ykc, ykclient_handle_t * ykh,
 	      goto finish;
 	    }
 
-	  ykclient_server_response_free (srv_response);
-	  srv_response = NULL;
+	  ykclient_server_response_free (ykc->srv_response);
+	  ykc->srv_response = NULL;
 	}
     }
   while (requests);
 finish:
-  if (srv_response)
-    {
-      ykclient_server_response_free (srv_response);
-    }
-
   return out;
 }
 
@@ -1505,4 +1542,12 @@ ykclient_verify_otp (const char *yubikey_otp,
   return ykclient_verify_otp_v2 (NULL,
 				 yubikey_otp,
 				 client_id, hexkey, 0, NULL, NULL);
+}
+
+/**
+ * Fetch out server response of last query
+ */
+const ykclient_server_response_t *
+ykclient_get_server_response(ykclient_t *ykc) {
+  return ykc->srv_response;
 }

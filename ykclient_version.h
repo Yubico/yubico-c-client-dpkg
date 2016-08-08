@@ -42,7 +42,7 @@ extern "C"
  * version number.  Used together with ykclient_check_version() to
  * verify header file and run-time library consistency.
  */
-#define YKCLIENT_VERSION_STRING "2.14"
+#define YKCLIENT_VERSION_STRING "2.15"
 
 /**
  * YKCLIENT_VERSION_NUMBER
@@ -52,7 +52,7 @@ extern "C"
  * this symbol will have the value 0x01020300.  The last two digits
  * are only used between public releases, and will otherwise be 00.
  */
-#define YKCLIENT_VERSION_NUMBER 0x020e00
+#define YKCLIENT_VERSION_NUMBER 0x020f00
 
 /**
  * YKCLIENT_VERSION_MAJOR
@@ -70,7 +70,7 @@ extern "C"
  * level of the header file version number.  For example, when the
  * header version is 1.2.3 this symbol will be 2.
  */
-#define YKCLIENT_VERSION_MINOR 14
+#define YKCLIENT_VERSION_MINOR 15
 
 /**
  * YKCLIENT_VERSION_PATCH
